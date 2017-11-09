@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label 'master'
+  }
 
 
   stages {
@@ -16,14 +18,10 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      steps {
-        echo 'Testing..'
-      }
-    }
     stage('Deploy') {
       steps {
         echo 'Deploying..'
+        sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
       }
     }
   }
