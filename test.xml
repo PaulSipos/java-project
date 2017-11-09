@@ -8,7 +8,7 @@
   <property name="build.dir" location="bin"/>
   <property name="dist.dir" location="dist"/>
   <property name="docs.dir" location="docs"/>
-  <property name="report.dir" location="report"/>
+  <property name="report.dir" location="reports"/>
 
   <path id="class.path">
     <pathelement location="./lib/junit-4.10.jar" />
