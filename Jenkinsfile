@@ -50,6 +50,8 @@ pipeline {
         docker 'openjdk:8u151-jre'
       }
       steps {
+        sh "hostname"
+        sh "whoami"
         sh "wget http://192.168.105.30:8081/rectangles/all/Rectangle_${env.BUILD_NUMBER}.jar"
         sh "java -jar Rectangle_${env.BUILD_NUMBER}.jar 3 4"
       }
