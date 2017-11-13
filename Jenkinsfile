@@ -36,7 +36,7 @@ pipeline {
       steps {
         echo 'Deploying..'
         sh "mkdir -p /var/www/html/rectangles/all/${env.BRANCH_NAME}"
-        sh "cp dist/Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
+        sh "cp dist/Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
       }
     }
     stage ("Running on CentOS") {
@@ -44,8 +44,8 @@ pipeline {
         label 'CentOS'
       }
       steps {
-        sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
-        sh "java -jar Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
+        sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
+        sh "java -jar Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
       }
     }
     stage ("Test on Debian") {
@@ -54,8 +54,8 @@ pipeline {
       }
       steps {
         sh "hostname"
-                sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
-        sh "java -jar Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
+                sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
+        sh "java -jar Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
       }
     }
     stage('Promote to Green'){
@@ -66,7 +66,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
+        sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
       }
     }
     stage ('Promote Development Branch to Master') {
