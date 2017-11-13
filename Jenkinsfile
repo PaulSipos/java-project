@@ -56,8 +56,11 @@ pipeline {
       }
     }
     stage('Promote to Green'){
+      agent {
+        label 'apache'
+      }
       steps {
-        sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/
+        sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
       }
     }
   }
