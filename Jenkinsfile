@@ -59,6 +59,9 @@ pipeline {
       agent {
         label 'apache'
       }
+      when {
+        branch 'development'
+      }
       steps {
         sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
       }
