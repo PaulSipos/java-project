@@ -46,13 +46,21 @@ pipeline {
         sh "java -jar Rectangle_${env.BUILD_NUMBER}.jar 3 4"
       }
     }
+    stage ("Test docker install") {
+      agent {
+        label 'CentOS'
+      }
+      steps {
+        sh "docker run hello-world"
+      }
+    }
     stage ("Test on Debian") {
       agent {
         docker 'openjdk:8u151-jre'
       }
       steps {
         sh "hostname"
-        sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.BUILD_NUMBER}.jar"
+                sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.BUILD_NUMBER}.jar"
         sh "java -jar Rectangle_${env.BUILD_NUMBER}.jar 3 4"
       }
     }
