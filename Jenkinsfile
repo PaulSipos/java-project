@@ -33,7 +33,8 @@ pipeline {
       }
       steps {
         echo 'Deploying..'
-        sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
+        sh "mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}"
+        sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
       }
     }
     stage ("Running on CentOS") {
@@ -41,7 +42,7 @@ pipeline {
         label 'CentOS'
       }
       steps {
-        sh "wget http://192.168.105.30:8081/rectangles/all/Rectangle_${env.BUILD_NUMBER}.jar"
+        sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.BUILD_NUMBER}.jar"
         sh "java -jar Rectangle_${env.BUILD_NUMBER}.jar 3 4"
       }
     }
@@ -51,7 +52,7 @@ pipeline {
       }
       steps {
         sh "hostname"
-        sh "wget http://192.168.105.30:8081/rectangles/all/Rectangle_${env.BUILD_NUMBER}.jar"
+        sh "wget http://192.168.105.30:8081/rectangles/all/${env.BRANCH_NAME}/Rectangle_${env.BUILD_NUMBER}.jar"
         sh "java -jar Rectangle_${env.BUILD_NUMBER}.jar 3 4"
       }
     }
@@ -60,10 +61,30 @@ pipeline {
         label 'apache'
       }
       when {
-        branch 'development'
+        branch 'master'
       }
       steps {
         sh "cp dist/Rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
+      }
+    }
+    stage ('Promote Development Branch to Master') {
+      agent {
+        label 'apache'
+      }
+      when {
+        branch 'development'
+      }
+      steps {
+        echo 'Stashing Any Local Changes'
+        sh 'git stash'
+        echo 'Checking Out Development Branch'
+        sh 'git checkout development'
+        echo 'Checking Out the Master Branch'
+        sh 'git checkout master'
+        echo 'Merging Development into Master Branch'
+        sh 'git merge development'
+        echo 'Pushing to Origin Master'
+        sh 'git push origin master'
       }
     }
 
