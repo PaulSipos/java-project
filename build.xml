@@ -44,7 +44,7 @@
   <target name="jar" depends="compile"
         description="generate the deployable jar">
         <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar destfile="${dist.dir}/Rectangle_${env.BUILD_NUMBER}.jar" basedir="${build.dir}">
+    <jar destfile="${dist.dir}/Rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar" basedir="${build.dir}">
     <manifest>
       <attribute name="Main-Class" value="Rectangulator" />
     </manifest>
