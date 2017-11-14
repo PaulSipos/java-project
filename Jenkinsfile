@@ -48,6 +48,14 @@ pipeline {
         sh "java -jar Rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
       }
     }
+    stage ("Testing docker install") {
+      agent {
+        label 'CentOS'
+      }
+      steps {
+        sh 'docker run hello-world'
+      }
+    }
     stage ("Test on Debian") {
       agent {
         docker 'openjdk:8u151-jre'
