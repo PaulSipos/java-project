@@ -22,7 +22,7 @@ pipeline {
             def myLib = new linuxacademy.git.gitStuff();
 
             echo "My Commit: ${myLib.gitCommit("${env.WORKSPACE}/.git")}"
-            
+
           }
         }
     }
@@ -88,7 +88,7 @@ pipeline {
     }
     stage('Promote to Green'){
       agent {
-        label 'apache'
+        label 'slave1'
       }
       when {
         branch 'master'
