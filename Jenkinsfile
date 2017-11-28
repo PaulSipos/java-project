@@ -88,7 +88,7 @@ pipeline {
     }
     stage('Promote to Green'){
       agent {
-        label 'slave1'
+        label 'apache'
       }
       when {
         branch 'master'
